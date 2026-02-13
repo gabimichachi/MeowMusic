@@ -1,7 +1,8 @@
 from flask import Flask, render_template
-import  mysql.connector
+import mysql.connector
 
 app = Flask(__name__)
+
 
 @app.route("/")
 @app.route("/principal" , methods =["GET"])
@@ -10,10 +11,10 @@ def pagina_principal():
 
     #conectando no banco de dados
     conexao = mysql.connector.connect(
-        host = "localhost"
+        host = "localhost",
         port = 3306,
         user = "root",
-        password = "root"
+        password = "root",
         database = "MeowMusic"
     )
 
