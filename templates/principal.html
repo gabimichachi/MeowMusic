@@ -1,22 +1,39 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html> <!-- Define que o documento é HTML5 -->
+<html lang="pt-br"> <!-- Início do HTML e define o idioma como português do Brasil -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusicTube - Home</title>
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres para suportar acentos -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsividade para dispositivos móveis -->
+    <title>MusicTube - Home</title> <!-- Título da aba do navegador -->
+
+    <!-- Importação do framework CSS Bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+    <!-- Importação dos ícones do Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
+        /* Estilização geral do corpo da página */
         body { background-color: #0a0a0a; color: #fff; min-height: 100vh; padding-top: 3.25rem; }
+
+        /* Estilo da barra de navegação */
         .navbar { background-color: #1a1a1a; border-bottom: 1px solid #2d2d2d; }
+
+        /* Cor dos itens da navbar */
         .navbar-item, .navbar-link { color: #fff !important; }
+
+        /* Estilização do campo de input */
         .input { background-color: #2d2d2d; border-color: #3d3d3d; color: #fff; }
+
+        /* Cor do texto placeholder do input */
         .input::placeholder { color: #888; }
         
         /* Ajuste nos Títulos para não sobrepor */
         .music-title { color: #fff; font-weight: 600; line-height: 1.2; margin-bottom: 4px !important; display: block; }
+
+        /* Estilo do nome do cantor */
         .music-singer { color: #b5b5b5; font-size: 0.85rem; margin-bottom: 12px !important; display: block; }
         
+        /* Estilo do card da música */
         .music-card { 
             background-color: #1a1a1a;
             border: 1px solid #2d2d2d; 
@@ -26,44 +43,61 @@
             height: 100%;
         }
 
+        /* Efeito ao passar o mouse sobre o card */
         .music-card:hover { border-color: #4a4a4a; background-color: #222; }
+
+        /* Ajuste da imagem para proporção 16:9 */
         .card-image img { aspect-ratio: 16/9; object-fit: cover; width: 100%; }
         
+        /* Estilo do título da seção do menu */
         .menu-label { color: #7a7a7a; padding-left: 10px; }
+
+        /* Estilo dos links do menu */
         .menu-list a { color: #b5b5b5; }
+
+        /* Efeito hover nos links do menu */
         .menu-list a:hover { background-color: #2d2d2d; color: #fff; }
+
+        /* Cor personalizada do ícone do YouTube */
         .icon-youtube {color:red}
     </style>
 </head>
-<body>
 
+<body> <!-- Início do corpo da página -->
+
+    <!-- Barra de navegação fixa no topo -->
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div class="container is-fluid">
+        <div class="container is-fluid"> <!-- Container fluido do Bulma -->
+
+            <!-- Parte esquerda da navbar (logo) -->
             <div class="navbar-brand">
-                <a class="navbar-item" href="/">
-                    <i class="fa-brands fa-youtube icon-youtube is-size-3 mr-2"></i>
-                    <strong class="has-text-white is-size-4">MusicTube</strong>
+                <a class="navbar-item" href="/"> <!-- Link para a página inicial -->
+                    <i class="fa-brands fa-youtube icon-youtube is-size-3 mr-2"></i> <!-- Ícone do YouTube -->
+                    <strong class="has-text-white is-size-4">MusicTube</strong> <!-- Nome do site -->
                 </a>
             </div>
 
-            <div class="navbar-menu">
+            <div class="navbar-menu"> <!-- Menu principal da navbar -->
+
+                <!-- Parte central da navbar (barra de pesquisa) -->
                 <div class="navbar-end" style="flex-grow: 1; justify-content: center; display: flex; align-items: center;">
-                    <div class="field has-addons" style="width: 50%;">
+                    <div class="field has-addons" style="width: 50%;"> <!-- Campo com botão acoplado -->
                         <div class="control is-expanded">
-                            <input class="input is-rounded" type="text" placeholder="Pesquisar músicas...">
+                            <input class="input is-rounded" type="text" placeholder="Pesquisar músicas..."> <!-- Campo de pesquisa -->
                         </div>
                         <div class="control">
-                            <button class="button is-dark is-rounded">
-                                <i class="fa-solid fa-magnifying-glass"></i>
+                            <button class="button is-dark is-rounded"> <!-- Botão de pesquisa -->
+                                <i class="fa-solid fa-magnifying-glass"></i> <!-- Ícone de lupa -->
                             </button>
                         </div>
                     </div>
                 </div>
 
+                <!-- Parte direita da navbar (botão admin) -->
                 <div class="navbar-end">
                     <div class="navbar-item">
-                        <a href="/admin" class="button is-link">
-                            <i class="fa-solid fa-user-shield mr-2"></i> Admin
+                        <a href="/admin" class="button is-link"> <!-- Link para área administrativa -->
+                            <i class="fa-solid fa-user-shield mr-2"></i> Admin <!-- Ícone de administrador -->
                         </a>
                     </div>
                 </div>
@@ -71,41 +105,57 @@
         </div>
     </nav>
 
+    <!-- Seção principal da página -->
     <div class="section">
-        <div class="columns">
+        <div class="columns"> <!-- Sistema de colunas do Bulma -->
+
+            <!-- Menu lateral (visível apenas em telas maiores) -->
             <aside class="column is-2 is-hidden-mobile">
                 <div class="menu">
-                    <p class="menu-label">Categorias</p>
+                    <p class="menu-label">Categorias</p> <!-- Título do menu -->
                     <ul class="menu-list">
+                        <!-- Lista de categorias -->
                         <li><a href="#"><span class="icon"><i class="fa-solid fa-compact-disc"></i></span> Rock</a></li>
                         <li><a href="#"><span class="icon"><i class="fa-solid fa-compact-disc"></i></span> Pop</a></li>
                     </ul>
                 </div>
             </aside>
 
+            <!-- Conteúdo principal -->
             <main class="column">
-                <div class="columns is-multiline">
-                    
+                <div class="columns is-multiline"> <!-- Permite múltiplas linhas de cards -->
+                    {% for musica in musicas %}
+                    <!-- Coluna responsiva do card -->
                     <div class="column is-12-mobile is-6-tablet is-4-desktop is-3-widescreen">
-                        <div class="music-card">
+                        <div class="music-card"> <!-- Card da música -->
+
+                            <!-- Imagem da música -->
                             <div class="card-image">
                                 <figure class="image">
-                                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800" alt="Capa">
+                                    <img src="{{musica.url_imagem}}" alt="Capa">
                                 </figure>
                             </div>
+
+                            <!-- Conteúdo textual do card -->
                             <div class="card-content p-4">
-                                <span class="music-title is-size-6">Título da Música de Exemplo</span>
+                                <span class="music-title is-size-6">{{musica.nome}}</span> <!-- Título -->
+                                
                                 <span class="music-singer">
-                                    <i class="fa-solid fa-microphone-lines mr-1"></i> Nome do Cantor
+                                    <i class="fa-solid fa-microphone-lines mr-1"></i>{{musica.cantor}} <!-- Nome do cantor -->
                                 </span>
                                 
+                                <!-- Tags de categoria e duração -->
                                 <div class="tags flex justify-between">
-                                    <span class="tag is-dark">Categoria</span>
-                                    <span class="tag is-black has-text-grey-light is-family-monospace">03:45</span>
+                                    <span class="tag is-dark">Categoria</span> <!-- Categoria -->
+                                        <span class="tag is-black has-text-grey-light is-family-monospace">{{musica.duração}}</span> <!-- Duração -->
+
+                                    
                                 </div>
                             </div>
+
                         </div>
                     </div>
+                    {%endfor%}
                     </div>
             </main>
         </div>
