@@ -1,36 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-br" style="background-color: #0a0a0a;">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Admin - MusicTube</title>
+    <title>Painel Admin - MeowMusic</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Força o fundo escuro em toda a página, independente do conteúdo */
-        html, body { 
-            background-color: #0a0a0a !important; 
-            color: #fff; 
+        /* Fundo geral pastel */
+        html,
+        body {
+            background-color: #fdf6f9 !important;
+            color: #5c5c6f;
             min-height: 100vh;
             margin: 0;
         }
-        
-        body { padding: 40px 10px; }
-        
-        .box { background-color: #1a1a1a; border: 1px solid #2d2d2d; color: #fff; }
-        .input, .select select { background-color: #2d2d2d; border-color: #3d3d3d; color: #fff; }
-        .input:focus, .select select:focus { border-color: #485fc7; }
-        
-        /* Ajustes da Tabela */
-        .table { background-color: transparent; color: #fff; }
-        .table thead th { color: #7a7a7a; border-bottom-color: #2d2d2d; text-transform: uppercase; font-size: 0.75rem; }
-        .table td { border-bottom-color: #2d2d2d; vertical-align: middle; }
-        tr:hover { background-color: #242424 !important; }
-        
-        .title, .label { color: #fff !important; }
-        .subtitle { color: #485fc7 !important; }
+
+        body {
+            padding: 40px 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Caixa principal */
+        .box {
+            background-color: #ffffff;
+            border: 1px solid #f3d7e3;
+            color: #6c5b7b;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Inputs e Select */
+        .input,
+        .select select {
+            background-color: #ffffff;
+            border: 1px solid #e8cfe0;
+            color: #6c5b7b;
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+
+        /* Focus suave */
+        .input:focus,
+        .select select:focus {
+            border-color: #d8b4f8;
+            box-shadow: 0 0 0 2px rgba(216, 180, 248, 0.2);
+        }
+
+        /* Tabela */
+        .table {
+            background-color: transparent;
+            color: #6c5b7b;
+        }
+
+        /* Cabeçalho da tabela */
+        .table thead th {
+            color: #b39bc8;
+            border-bottom: 1px solid #f3d7e3;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        /* Células */
+        .table td {
+            border-bottom: 1px solid #f3d7e3;
+            vertical-align: middle;
+        }
+
+        /* Hover nas linhas */
+        tr:hover {
+            background-color: #f8e8f2 !important;
+            transition: 0.2s ease;
+        }
+
+        /* Títulos */
+        .title,
+        .label {
+            color: #6c5b7b !important;
+        }
+
+        /* Subtítulo com destaque pastel */
+        .subtitle {
+            color: #d8b4f8 !important;
+        }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -52,13 +109,13 @@
             <h2 class="title is-5 mb-5">
                 <i class="fa-solid fa-circle-plus has-text-success mr-2"></i> Nova Música
             </h2>
-            <form>
+            <form action="./musica/post" method = "post">
                 <div class="columns is-multiline">
                     <div class="column is-4">
                         <div class="field">
                             <label class="label is-small">Título da Música</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Ex: Starboy">
+                                <input name = "titulo_input" class="input" type="text" placeholder="Ex: Starboy">
                             </div>
                         </div>
                     </div>
@@ -66,7 +123,7 @@
                         <div class="field">
                             <label class="label is-small">Cantor / Banda</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Ex: The Weeknd">
+                                <input name="Cantor" class="input" type="text" placeholder="Ex: The Weeknd">
                             </div>
                         </div>
                     </div>
@@ -74,7 +131,7 @@
                         <div class="field">
                             <label class="label is-small">Duração</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Ex: 03:50">
+                                <input name= "Duração" class="input" type="text" placeholder="Ex: 03:50">
                             </div>
                         </div>
                     </div>
@@ -82,19 +139,22 @@
                         <div class="field">
                             <label class="label is-small">URL da Imagem de Capa</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="https://...">
+                                <input name="url_input" class="input" type="text" placeholder="https://...">
                             </div>
                         </div>
                     </div>
                     <div class="column is-4">
                         <div class="field">
-                            <label class="label is-small">Categoria</label>
+                            <label name = "categoria_input" class="label is-small">Categoria</label>
                             <div class="control is-expanded">
                                 <div class="select is-fullwidth">
                                     <select>
-                                        <option>Selecione...</option>
+                                        {%for genero in generos %}
+                                        <option value="{{nome_genero.nome}}">{{genero.nome}}Selecione...</option>
                                         <option>Rock</option>
                                         <option>Pop</option>
+                                        <option>Indie</option>
+                                        <option>R&B Alternativo</option>
                                     </select>
                                 </div>
                             </div>
@@ -106,7 +166,7 @@
                 </button>
             </form>
         </div>
-        
+
         <div class="box p-0" style="overflow-x: auto; border-radius: 6px;">
             <table class="table is-fullwidth">
                 <thead>
@@ -153,8 +213,9 @@
                 </tbody>
             </table>
         </div>
-       
+
     </div>
 
 </body>
+
 </html>

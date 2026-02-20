@@ -38,3 +38,7 @@ def adicionar_musica(cantor:str, nome_musica:str, duracao:str, imagem:str, gener
     conexao.commit()
 
     conexao.close()
+
+    return True
+
+ 

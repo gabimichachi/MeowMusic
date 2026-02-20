@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import mysql.connector
 from model.musicas import recuperar_musicas
 from model.generos import recuperar_generos 
+from model.musicas import adicionar_musica
 
 app = Flask(__name__)
 
@@ -25,5 +26,12 @@ def pag_admin():
     # mostrando a pagina 
     return render_template("administracao.html" , musicas = musicas)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route("/musica/post", methods = ["POST"])
+def api_inserir_musica():
+    nome_musica = request.form.get("titulo_input")
+    cantor = request.form.get("")
+
+if adicionar_musica:
+
+    if __name__ == "__main__":
+        app.run(debug=True)
