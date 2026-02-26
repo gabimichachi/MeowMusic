@@ -115,7 +115,7 @@
                         <div class="field">
                             <label class="label is-small">Título da Música</label>
                             <div class="control">
-                                <input name = "titulo_input" class="input" type="text" placeholder="Ex: Starboy">
+                                <input name = "musica_input" class="input" type="text" placeholder="Ex: Starboy">
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                         <div class="field">
                             <label class="label is-small">Cantor / Banda</label>
                             <div class="control">
-                                <input name="Cantor" class="input" type="text" placeholder="Ex: The Weeknd">
+                                <input name="cantor_input" class="input" type="text" placeholder="Ex: The Weeknd">
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                         <div class="field">
                             <label class="label is-small">Duração</label>
                             <div class="control">
-                                <input name= "Duração" class="input" type="text" placeholder="Ex: 03:50">
+                                <input name= "duracao_input" class="input" type="text" placeholder="Ex: 03:50">
                             </div>
                         </div>
                     </div>
@@ -151,6 +151,7 @@
                                     <select>
                                         {%for genero in generos %}
                                         <option value="{{nome_genero.nome}}">{{genero.nome}}Selecione...</option>
+                                        {% endfor %}
                                         <option>Rock</option>
                                         <option>Pop</option>
                                         <option>Indie</option>
@@ -196,14 +197,18 @@
                         <td class="is-family-monospace has-text-centered">04:12</td>
                         <td><span class="tag is-dark">{{musica.genero}}</span></td>
                         <td class="has-text-centered">
+                            {% if musica.ativo %}
                             <span class="tag is-success is-light">ATIVO</span>
+                            {% else %}
+                            <span class="tag is-danger is-light">DESTIVADO</span>
+                            {% endif %}
                         </td>
                         <td class="has-text-right px-5">
                             <div class="buttons is-right">
                                 <button class="button is-small is-warning is-light" title="Desativar">
                                     <i class="fa-solid fa-eye-slash"></i>
                                 </button>
-                                <button class="button is-small is-danger is-light" title="Excluir">
+                                <a href="/musica/delete/{{musica.codigo}}" class="button is-small is-danger is-light" title="Excluir">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </div>

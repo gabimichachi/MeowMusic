@@ -5,7 +5,7 @@ def recuperar_musicas():
     conexao, cursor = conectar()
 
     #executando a consulta
-    cursor.execute("SELECT codigo, cantor, duracao, nome, url_imagem FROM musica")
+    cursor.execute("SELECT codigo, cantor, duracao, nome, url_imagem, ativo  FROM musica")
 
     #recuperando os dados
     musicas = cursor.fetchall()
@@ -17,14 +17,14 @@ def recuperar_musicas():
 
 def adicionar_musica(cantor:str, nome_musica:str, duracao:str, imagem:str, genero:str) -> bool:
     """
-    a função é adicionar musicas no banco de dados 
+    essa função é para adicionar musicas no banco de dados 
 
     """
 
     conexao, cursor = conectar()
 
     cursor.execute("""
-                   INSERT INTO musica
+                   INSERT INTO Musica
                    (CANTOR, NOME, DURACAO, URL_IMAGEM, NOME_GENERO)
                    VALUES
                    (%s,%s,%s,%s,%s);
@@ -41,4 +41,24 @@ def adicionar_musica(cantor:str, nome_musica:str, duracao:str, imagem:str, gener
 
     return True
 
- 
+def excluir_musica(codigo:int):
+    """
+    essa função serve para excluir as músicas do banco de dados    
+    """
+    conexao, cursor = conectar()
+
+
+    cursor.execute("""
+                   DELETE FROM Musica WHERE Codigo = %s;
+
+""", [codigo])
+    
+    #confirmando o delete
+    conexao.commit()
+
+    #fechando a conexao
+    conexao.close()
+
+# def ativar_musica(codigo:int, status:bool):
+
+     
