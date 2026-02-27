@@ -11,10 +11,11 @@ app = Flask(__name__)
 @app.route("/principal" , methods =["GET"])
 def pagina_principal():
     # recuperando as musicas
-    musicas = recuperar_musicas()
+    musicas = recuperar_musicas(True)
     # recuperando os generos
     generos = recuperar_generos()
     # mostrando a pagina
+    excluir_musica(True)
     return render_template("principal.html", musicas = musicas, generos = generos)
 
 

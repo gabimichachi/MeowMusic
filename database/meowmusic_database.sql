@@ -30,7 +30,7 @@ VALUES
 ('ENGENHEIROS DO  HAWAII' , 'TERRA DE GIGANTES', '3:46', 'https://akamai.sscdn.co/uploadfile/letras/albuns/8/9/4/6/59451441052805.jpg', 'MPB', 1),
 ('PITBULL' , 'WE ARE ONE (OLE OLA)', '4:07', 'https://upload.wikimedia.org/wikipedia/pt/d/dc/WeAreOneOleOla.png', 'POP', 1),
 ('SABRINA CARPENTER' , 'MANCHILD', '3:57', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2imK6CZkl5bv5_i5M4b05WOaV39m9h-mKAQ&s', 'POP', 1),
-('SABRINA CARPENTER' , 'ESPRESSO', '3:21', 'https://upload.wikimedia.org/wikipedia/pt/a/aa/Sabrina_Carpenter_-_Espresso.png', 'POP', 1);
+('SABRINA CARPENTER' , 'ESPRESSO', '3:21', 'https://upload.wikimedia.org/wikipedia/pt/a/aa/Sabrina_Carpenter_-_Espresso.png', 'POP', 1),
 ('OLIVIA RODRIGO' , 'TRAITOR', '3:50', 'https://cdn-images.dzcdn.net/images/cover/e68da86fd7976135c2d2d1715afaef7c/1900x1900-000000-80-0-0.jpg', 'POP', 1),
 ('BRITNEY SPEARS' , 'BABY ONE MORE TIME', '3:57', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe3nDFFM0K3HwEznI6qaBtxQA_Hhrv0oSzlw&s', 'POP', 1),
 ('CHAPELL ROAN' , 'CASUAL', '6:37', 'https://m.media-amazon.com/images/I/51Z5NqkmzQL._UXNaN_FMjpg_QL85_.jpg', 'POP', 1);
