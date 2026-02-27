@@ -57,6 +57,20 @@ def excluir_musica(codigo:int):
 
 """, [codigo])
     
+
+    
+def ativar_musica(codigo:int, status:bool):
+    """
+    essa função serve para alterar as músicas
+    """
+    conexao, cursor = conectar()
+    cursor.execute("""
+                ALTER TABLE FROM Musica WHERE Codigo = %s;
+""", [codigo])
+    
+
+
+    
     #confirmando o delete
     conexao.commit()
 
