@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Implementação: Autenticação Manual com Session</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Slate & Amber (Deep Blue, Slate, Amber, Rose) -->
+    <!-- Application Structure Plan: A simplified developer's guide focused on manual session management. The layout uses a persistent sidebar for progress and a main area for the checklist. I've separated the Model function into its own section to emphasize the separation of concerns (MVC) and ensure the student understands that database logic belongs in the model, not the route. -->
+    <!-- Visualization & Content Choices: Manual Auth Steps -> Goal: Teach Custom Logic Flow -> Viz: Interactive Task List + Progress Ring -> Interaction: Real-time calculation of completion -> Justification: Manual flows are error-prone, so a clear step-by-step verification is vital. Confirming NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 250px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 250px;
+        }
+        .task-checkbox:checked + div {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <header class="lg:col-span-3 mb-4">
+            <h1 class="text-4xl font-bold text-slate-900 mb-2">🔑 Autenticação Manual e Sessões</h1>
+            <p class="text-lg text-slate-600">Checklist para implementar login usando <code>session</code> e verificações manuais com <code>if</code>.</p>
+        </header>
+
+        <aside class="lg:col-span-1 space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sticky top-8">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Progresso do Login</h2>
+                
+                <div class="chart-container">
+                    <canvas id="authProgressChart"></canvas>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <span class="text-4xl font-bold text-slate-900" id="progressText">0%</span>
+                    <p class="text-sm text-slate-500 uppercase tracking-wide mt-1">Concluído</p>
+                </div>
+
+                <div class="mt-8 bg-amber-50 p-4 rounded-xl border border-amber-100">
+                    <h3 class="font-bold text-amber-900 mb-2">⚠️ Nota Importante</h3>
+                    <p class="text-sm text-amber-800 leading-relaxed">
+                        Nesta fase, as senhas serão comparadas diretamente. Lembre-se que em produção o uso de hashes é obrigatório para a segurança do usuário.
+                    </p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="lg:col-span-2 space-y-6" id="checklist-container">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                <h2 class="text-xl font-semibold text-slate-900 mb-2">Roteiro de Desenvolvimento</h2>
+                <p class="text-slate-600 text-sm">Siga os passos abaixo para construir o sistema de login manual sem dependências externas de autenticação.</p>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        const authPhases = [
+            {
+                id: 'auth_1',
+                title: '🌐 1. Interface de Utilizador',
+                colorClass: 'border-slate-500 bg-slate-50/50',
+                headerClass: 'text-slate-800',
+                tasks: [
+                    { id: 'at1_1', text: '<strong>Template HTML:</strong> Criar o arquivo <code>login.html</code>.', done: false },
+                    { id: 'at1_2', text: '<strong>Formulário:</strong> Adicionar as tags <code>&lt;form&gt;</code> e os <code>&lt;input&gt;</code> para login e senha.', done: false },
+                    { id: 'at1_3', text: '<strong>Atributos Name:</strong> Garantir que cada input tem o atributo <code>name</code> para ser identificado no Flask.', done: false }
+                ]
+            },
+            {
+                id: 'auth_model',
+                title: '📂 2. Lógica no Modelo (Model)',
+                colorClass: 'border-emerald-500 bg-emerald-50/50',
+                headerClass: 'text-emerald-800',
+                tasks: [
+                    { id: 'atM_1', text: '<strong>Arquivo de Modelo:</strong> Criar ou aceder ao ficheiro de funções do utilizador (ex: <code>usuario_model.py</code>).', done: false },
+                    { id: 'atM_2', text: '<strong>Função de Autenticação:</strong> Criar a função <code>autenticar_usuario(login, senha)</code>.', done: false },
+                    { id: 'atM_3', text: '<strong>Consulta ao BD:</strong> Implementar o <code>SELECT</code> que procura o utilizador onde o login e a senha coincidem.', done: false },
+                    { id: 'atM_4', text: '<strong>Retorno de Dados:</strong> Garantir que a função retorna os dados do utilizador (ou <code>None</code> se não encontrar).', done: false }
+                ]
+            },
+            {
+                id: 'auth_2',
+                title: '⚙️ 3. Rota de Autenticação (POST)',
+                colorClass: 'border-blue-500 bg-blue-50/50',
+                headerClass: 'text-blue-800',
+                tasks: [
+                    { id: 'at2_1', text: '<strong>Captura de Dados:</strong> Usar <code>request.form.get()</code> na rota para recuperar os dados do formulário.', done: false },
+                    { id: 'at2_2', text: '<strong>Validação Manual:</strong> Invocar a função do model e usar um <code>if</code> para validar o resultado.', done: false },
+                    { id: 'at2_3', text: '<strong>Criação da Sessão:</strong> Se o utilizador existir, guardar o ID na <code>session["usuario_logado"]</code>.', done: false },
+                    { id: 'at2_4', text: '<strong>Redirecionamento:</strong> Enviar para o admin em caso de sucesso ou recarregar login com erro.', done: false }
+                ]
+            },
+            {
+                id: 'auth_3',
+                title: '🛡️ 4. Proteção Manual do Admin',
+                colorClass: 'border-amber-500 bg-amber-50/50',
+                headerClass: 'text-amber-800',
+                tasks: [
+                    { id: 'at3_1', text: '<strong>Verificação de Sessão:</strong> Na rota <code>/admin</code>, verificar se <code>"usuario_logado"</code> está na <code>session</code>.', done: false },
+                    { id: 'at3_2', text: '<strong>Bloqueio com IF:</strong> Se não estiver logado, redirecionar obrigatoriamente para o login.', done: false },
+                    { id: 'at3_3', text: '<strong>Feedback:</strong> Exibir mensagem de erro para tentativas de acesso não autorizado.', done: false }
+                ]
+            },
+            {
+                id: 'auth_4',
+                title: '🚪 5. Finalização (Logout)',
+                colorClass: 'border-rose-500 bg-rose-50/50',
+                headerClass: 'text-rose-800',
+                tasks: [
+                    { id: 'at4_1', text: '<strong>Rota de Logout:</strong> Criar a rota <code>/logout</code> no Flask.', done: false },
+                    { id: 'at4_2', text: '<strong>Limpeza:</strong> Usar <code>session.clear()</code> para encerrar a sessão do utilizador.', done: false },
+                    { id: 'at4_3', text: '<strong>Navegação:</strong> Redirecionar para o login após o logout.', done: false }
+                ]
+            }
+        ];
+
+        let chartInstance = null;
+
+        function getStats() {
+            let total = 0;
+            let done = 0;
+            authPhases.forEach(p => {
+                p.tasks.forEach(t => {
+                    total++;
+                    if (t.done) done++;
+                });
+            });
+            const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+            return { done, total, pct, remaining: total - done };
+        }
+
+        function updateDisplay() {
+            const stats = getStats();
+            document.getElementById('progressText').innerText = stats.pct + '%';
+            if (chartInstance) {
+                chartInstance.data.datasets[0].data = [stats.done, stats.remaining];
+                chartInstance.data.datasets[0].backgroundColor = stats.pct === 100 ? ['#10b981', '#f1f5f9'] : ['#f59e0b', '#f1f5f9'];
+                chartInstance.update();
+            }
+        }
+
+        function toggleTask(pId, tId) {
+            const phase = authPhases.find(p => p.id === pId);
+            if (phase) {
+                const task = phase.tasks.find(t => t.id === tId);
+                if (task) {
+                    task.done = !task.done;
+                    updateDisplay();
+                }
+            }
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            authPhases.forEach(phase => {
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl shadow-sm border-l-4 p-6 ${phase.colorClass} border-t border-r border-b border-slate-200 transition-all duration-300 hover:shadow-md mb-4`;
+                
+                const html = `
+                    <h3 class="text-xl font-bold mb-4 ${phase.headerClass}">${phase.title}</h3>
+                    <div class="space-y-4">
+                        ${phase.tasks.map(t => `
+                            <label class="flex items-start cursor-pointer group p-2 hover:bg-white/50 rounded-lg transition-colors">
+                                <input type="checkbox" class="task-checkbox mt-1 mr-3 w-5 h-5 accent-slate-600 cursor-pointer" 
+                                    ${t.done ? 'checked' : ''} onchange="toggleTask('${phase.id}', '${t.id}')">
+                                <div class="text-slate-700 leading-tight">${t.text}</div>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('authProgressChart').getContext('2d');
+            const stats = getStats();
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Feito', 'Pendente'],
+                    datasets: [{
+                        data: [stats.done, stats.remaining],
+                        backgroundColor: ['#f59e0b', '#f1f5f9'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '80%',
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        window.onload = () => {
+            renderChecklist();
+            initChart();
+            updateDisplay();
+        };
+    </script>
+</body>
+</html>

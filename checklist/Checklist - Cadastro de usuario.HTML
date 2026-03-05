@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Implementação: Cadastro de Usuário</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Neutrals with Action Accents (Stone, Emerald, Blue, Amber, Orange, Rose) -->
+    <!-- Application Structure Plan: A task-oriented dashboard layout. The structure uses a sticky sidebar/top section for overall progress visualization (using a Donut chart) and a main scrollable area containing the interactive checklist categorized by implementation phase. This design was chosen to gamify the implementation process, providing immediate visual feedback as developers complete technical steps, ensuring no critical step is missed while keeping the overall goal visible. -->
+    <!-- Visualization & Content Choices: Report Info: Implementation steps -> Goal: Organize & Inform -> Viz: Interactive Checklist with Progress Chart -> Interaction: Check/Uncheck updates global state and chart -> Justification: Best for tracking multi-step technical processes -> Library: Chart.js for progress, HTML/JS for checklist. Confirming NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            background-color: #fafaf9;
+            color: #1c1917;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 250px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 250px;
+        }
+        .task-checkbox:checked + div {
+            text-decoration: line-through;
+            color: #78716c;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <header class="lg:col-span-3 mb-4">
+            <h1 class="text-4xl font-bold text-stone-800 mb-2">🚀 Dashboard de Implementação de Cadastro</h1>
+            <p class="text-lg text-stone-600">Este painel interativo acompanha o progresso do desenvolvimento do fluxo de cadastro de usuários, desde a interface até a integração com o banco de dados. Navegue pelas fases abaixo e marque as tarefas conforme as conclui.</p>
+        </header>
+
+        <aside class="lg:col-span-1 space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 sticky top-8">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Progresso Geral</h2>
+                <p class="text-sm text-stone-500 mb-6 text-center">Acompanhe seu avanço em tempo real. O gráfico reflete as tarefas concluídas no painel principal.</p>
+                
+                <div class="chart-container">
+                    <canvas id="progressChart"></canvas>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <span class="text-4xl font-bold text-stone-800" id="progressText">0%</span>
+                    <p class="text-sm text-stone-500 uppercase tracking-wide mt-1">Concluído</p>
+                </div>
+
+                <div class="mt-8 bg-stone-50 p-4 rounded-lg border border-stone-100">
+                    <h3 class="font-bold text-stone-700 mb-2">💡 Dicas de Sucesso</h3>
+                    <ul class="text-sm text-stone-600 space-y-2 list-disc pl-4">
+                        <li>Verifique se os nomes no <code>request.form.get("nome")</code> são exatamente iguais ao atributo <code>name</code> no HTML.</li>
+                        <li>Certifique-se de que o banco de dados está rodando antes de testar a inserção.</li>
+                        <li>Use mensagens de feedback (flash messages) para informar o usuário se o cadastro deu certo.</li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <main class="lg:col-span-2 space-y-6" id="checklist-container">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-6">
+                <h2 class="text-xl font-semibold text-stone-800 mb-2">Etapas do Projeto</h2>
+                <p class="text-stone-600 text-sm">Esta seção detalha os requisitos técnicos de cada fase do cadastro. Interaja com os itens de cada módulo (Frontend, Banco de Dados, Backend) para atualizar o status do projeto no painel lateral.</p>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        const phasesData = [
+            {
+                id: 'fase1',
+                title: '🟢 1. Interface e Rota de Exibição',
+                colorClass: 'border-emerald-500 bg-emerald-50',
+                headerClass: 'text-emerald-800',
+                tasks: [
+                    { id: 't1_1', text: '<strong>Criação do Template:</strong> Arquivo <code>cadastro.html</code> criado na pasta <code>templates</code>.', done: false },
+                    { id: 't1_2', text: '<strong>Estrutura HTML:</strong> Tags <code>&lt;form&gt;</code> e <code>&lt;input&gt;</code> (com atributos <code>name</code>) adicionadas.', done: false },
+                    { id: 't1_3', text: '<strong>Botão de Envio:</strong> Input ou button do tipo <code>submit</code> configurado.', done: false },
+                    { id: 't1_4', text: '<strong>Rota GET:</strong> Função Python com <code>@app.route("/cadastro")</code> renderizando o template.', done: false }
+                ]
+            },
+            {
+                id: 'fase2',
+                title: '🔵 2. Banco de Dados e Scripts',
+                colorClass: 'border-blue-500 bg-blue-50',
+                headerClass: 'text-blue-800',
+                tasks: [
+                    { id: 't2_1', text: '<strong>Modelagem da Tabela:</strong> Definição dos campos necessários para o usuário.', done: false },
+                    { id: 't2_2', text: '<strong>Script SQL:</strong> Script de criação da tabela montado com uma <code>PRIMARY KEY</code>.', done: false },
+                    { id: 't2_3', text: '<strong>Migração:</strong> Arquivo SQL salvo na pasta <code>migrate</code> para registro histórico.', done: false }
+                ]
+            },
+            {
+                id: 'fase3',
+                title: '🟡 3. Lógica de Negócio (Modelo)',
+                colorClass: 'border-amber-500 bg-amber-50',
+                headerClass: 'text-amber-800',
+                tasks: [
+                    { id: 't3_1', text: '<strong>Organizando:</strong> Novo arquivo criado na pasta <code>modelo</code> para funções de usuário.', done: false },
+                    { id: 't3_2', text: '<strong>Implementação da Função:</strong> Recebe parâmetros, abre conexão, executa <code>INSERT</code>, faz <code>commit</code> e fecha conexão (<code>finally</code>).', done: false },
+                    { id: 't3_3', text: '<strong>Profissionalismo:</strong> Tipagem especificada, docstring adicionada e tratamento com <code>try/except</code> (retornando True/False).', done: false }
+                ]
+            },
+            {
+                id: 'fase4',
+                title: '🟠 4. Integração e Rota de Processamento',
+                colorClass: 'border-orange-500 bg-orange-50',
+                headerClass: 'text-orange-800',
+                tasks: [
+                    { id: 't4_1', text: '<strong>Rota POST:</strong> Criação da rota responsável por processar o formulário.', done: false },
+                    { id: 't4_2', text: '<strong>Captura de Dados:</strong> Uso de <code>request.form.get</code> para coletar os valores dos inputs.', done: false },
+                    { id: 't4_3', text: '<strong>Conexão Rota-Modelo:</strong> Chamada da função de cadastro passando os dados coletados.', done: false },
+                    { id: 't4_4', text: '<strong>Fluxo de Navegação:</strong> Redirecionamento configurado para a página inicial ou login.', done: false }
+                ]
+            },
+            {
+                id: 'fase5',
+                title: '🔴 5. Ajustes Finais no HTML',
+                colorClass: 'border-rose-500 bg-rose-50',
+                headerClass: 'text-rose-800',
+                tasks: [
+                    { id: 't5_1', text: '<strong>Atributo Action:</strong> Tag <code>&lt;form&gt;</code> configurada com a URL da rota POST.', done: false },
+                    { id: 't5_2', text: '<strong>Atributo Method:</strong> Tag <code>&lt;form&gt;</code> configurada explicitamente com <code>method="POST"</code>.', done: false }
+                ]
+            }
+        ];
+
+        let progressChartInstance = null;
+
+        function calculateProgress() {
+            let totalTasks = 0;
+            let completedTasks = 0;
+
+            phasesData.forEach(phase => {
+                phase.tasks.forEach(task => {
+                    totalTasks++;
+                    if (task.done) completedTasks++;
+                });
+            });
+
+            const percentage = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+            return { completed: completedTasks, total: totalTasks, percentage: percentage, remaining: totalTasks - completedTasks };
+        }
+
+        function updateUI() {
+            const stats = calculateProgress();
+            
+            document.getElementById('progressText').innerText = stats.percentage + '%';
+
+            if (progressChartInstance) {
+                progressChartInstance.data.datasets[0].data = [stats.completed, stats.remaining];
+                
+                if (stats.percentage === 100) {
+                    progressChartInstance.data.datasets[0].backgroundColor = ['#10b981', '#f5f5f4'];
+                } else {
+                    progressChartInstance.data.datasets[0].backgroundColor = ['#3b82f6', '#f5f5f4'];
+                }
+                progressChartInstance.update();
+            }
+        }
+
+        function toggleTask(phaseId, taskId) {
+            const phase = phasesData.find(p => p.id === phaseId);
+            if (phase) {
+                const task = phase.tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.done = !task.done;
+                    updateUI();
+                }
+            }
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            
+            phasesData.forEach(phase => {
+                const phaseCard = document.createElement('div');
+                phaseCard.className = `bg-white rounded-xl shadow-sm border-l-4 p-5 ${phase.colorClass} border-t border-r border-b border-stone-200 transition-all hover:shadow-md`;
+                
+                const phaseHeader = document.createElement('h3');
+                phaseHeader.className = `text-xl font-bold mb-4 ${phase.headerClass}`;
+                phaseHeader.innerText = phase.title;
+                phaseCard.appendChild(phaseHeader);
+
+                const taskList = document.createElement('div');
+                taskList.className = 'space-y-3';
+
+                phase.tasks.forEach(task => {
+                    const taskLabel = document.createElement('label');
+                    taskLabel.className = 'flex items-start cursor-pointer group p-2 hover:bg-stone-50 rounded transition-colors';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.className = 'task-checkbox mt-1 mr-3 w-5 h-5 accent-stone-700 cursor-pointer';
+                    checkbox.checked = task.done;
+                    checkbox.onchange = () => toggleTask(phase.id, task.id);
+                    
+                    const taskText = document.createElement('div');
+                    taskText.className = 'text-stone-700 leading-tight transition-all';
+                    taskText.innerHTML = task.text;
+
+                    taskLabel.appendChild(checkbox);
+                    taskLabel.appendChild(taskText);
+                    taskList.appendChild(taskLabel);
+                });
+
+                phaseCard.appendChild(taskList);
+                container.appendChild(phaseCard);
+            });
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            const stats = calculateProgress();
+
+            progressChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Concluído', 'Pendente'],
+                    datasets: [{
+                        data: [stats.completed, stats.remaining],
+                        backgroundColor: ['#3b82f6', '#f5f5f4'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + ' tarefas';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            });
+        }
+
+        window.onload = () => {
+            renderChecklist();
+            initChart();
+            updateUI();
+        };
+    </script>
+</body>
+</html>

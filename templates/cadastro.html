@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cadastro</title>
+    <style>
+        /* formatação css */
+        body {
+            background-color: #fdf6f9 !important;
+            color: #5c5c6f;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .box {
+            background-color: #ffffff;
+            border: 1px solid #f3d7e3;
+            color: #6c5b7b;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(243, 241, 241, 0.05);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 2rem;
+            width: 350px;
+        }
+
+        .field {
+            margin-bottom: 1.5rem;
+        }
+
+        .label {
+            display: block;
+            color: #f592bf;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #fcdafa;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.75);
+            color: #000000;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .input::placeholder {
+            color: #fcdaf9;
+        }
+
+        .input:focus {
+            border-color: #d8b4f8;
+            box-shadow: 0 0 0 2px rgba(216, 180, 248, 0.2);
+        }
+
+        .button.is-primary {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f592bf 0%, #f592bf 100%);
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px #f592bf;
+        }
+
+        .button.is-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px #f592bf;
+            background: linear-gradient(135deg, #f592bf 0%, #f592bf 100%);
+        }
+
+        .button.is-primary:active {
+            transform: translateY(0);
+        }
+
+        h1 {
+            color: #f592bf;
+        }
+    </style>
+</head>
+
+
+<!-- container para fazer o login -->
+
+<body>
+    <form action="/cadastro" method="post">
+        <h1> ୧ ‧₊˚ welcome !🌺 ⋅ ☆ </h1>
+        usuario:
+        <input name="usuario">
+        <br>
+        senha:
+        <input name="senha">
+        <button type="submit">cadastrar!</button>
+
+
+    </form>
+
+</body>
+
+</html>
