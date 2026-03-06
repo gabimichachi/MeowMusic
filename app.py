@@ -5,6 +5,7 @@ from model.generos import recuperar_generos
 from model.musicas import adicionar_musica
 from model.musicas import excluir_musica
 from model.usuario import cadastrar_usuario
+from model.usuario import verificar_usuario
 app = Flask(__name__)
 
 
@@ -60,36 +61,21 @@ def rota_cadastro_usuario():
     return redirect("/cadastro")
 
 
-@app.route()
+@app.route("/login")
+def pagina_login():
+    return render_template("login.html")
 
+@app.route("login", methods = ["POST"])
+def rota_login_usuario():
+    login = request.form.get("usuario")
+    senha = request.form.get("senha")
+    usuario = verificar_usuario(login, senha)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if usuario:
+        return redirect("/admin")
+    
+    else:
+        return redirect("/login")
 
 if __name__ == "__main__":
     app.run(debug=True)
