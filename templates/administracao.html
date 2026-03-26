@@ -1,89 +1,110 @@
 <!DOCTYPE html>
-<html lang="pt-br" style="background-color: #0a0a0a;">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>painel admin - meowmusic</title>
+    <title>Painel Admin - MeowMusic</title>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* fundo */
-        html,
+        @import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+
+        :root {
+            --rosa-pastel: #ffdef2;
+            --rosa-escuro: #f2a2c0;
+            --amarelo-pastel: #ffffd1;
+            --amarelo-forte: #fdfd96;
+            --texto-cor: #6d5d6e;
+            --branco: #ffffff;
+            --roxo-fofo: #a393b7;
+        }
+
         body {
-            background-color: #fdf6f9 !important;
-            color: #5c5c6f;
+            background-color: var(--amarelo-pastel);
+            background-image: radial-gradient(var(--rosa-pastel) 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
             min-height: 100vh;
-            margin: 0;
+            color: var(--texto-cor);
+            font-family: 'Pangolin', cursive !important;
+            padding: 2rem 0;
         }
 
-        body {
-            padding: 40px 10px;
-            font-family: 'Poppins', sans-serif;
+        /* Estilização dos Títulos */
+        .title, .label {
+            color: var(--texto-cor) !important;
+            font-family: 'Pangolin', cursive !important;
         }
 
-        /* Caixa principal */
+        /* Caixas Brancas (Forms e Tabela) */
         .box {
-            background-color: #ffffff;
-            border: 1px solid #f3d7e3;
-            color: #6c5b7b;
-            border-radius: 16px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+            background-color: var(--branco);
+            border-radius: 25px;
+            border: 4px solid var(--rosa-pastel);
+            box-shadow: 0 10px 0px var(--rosa-pastel);
+            margin-bottom: 2rem;
         }
 
-        /* Inputs e Select */
-        .input,
-        .select select {
-            background-color: #ffffff;
-            border: 1px solid #e8cfe0;
-            color: #6c5b7b;
-            border-radius: 8px;
-            transition: 0.3s ease;
+        /* Estilo dos Inputs */
+        .input, .select select {
+            border-radius: 12px;
+            border: 2px solid var(--rosa-pastel);
+            font-family: 'Pangolin', cursive;
         }
 
-        /* Focus suave */
-        .input:focus,
-        .select select:focus {
-            border-color: #d8b4f8;
-            box-shadow: 0 0 0 2px rgba(216, 180, 248, 0.2);
+        .input:focus, .select select:focus {
+            border-color: var(--rosa-escuro);
+            box-shadow: 0 0 0 0.125em rgba(242, 162, 192, 0.25);
         }
 
         /* Tabela */
         .table {
             background-color: transparent;
-            color: #6c5b7b;
+            color: var(--texto-cor);
         }
 
-        /* Cabeçalho da tabela */
         .table thead th {
-            color: #b39bc8;
-            border-bottom: 1px solid #f3d7e3;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
+            color: var(--rosa-escuro) !important;
+            border-bottom: 3px solid var(--rosa-pastel);
         }
 
-        /* Células */
-        .table td {
-            border-bottom: 1px solid #f3d7e3;
-            vertical-align: middle;
+        /* --- CORREÇÃO DO TEXTO INVISÍVEL --- */
+        .music-name {
+            color: var(--texto-cor) !important;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
 
-        /* Hover nas linhas */
-        tr:hover {
-            background-color: #f8e8f2 !important;
-            transition: 0.2s ease;
+        .singer-name {
+            color: var(--roxo-fofo) !important;
+            font-size: 0.9rem;
         }
 
-        /* Títulos */
-        .title,
-        .label {
-            color: #6c5b7b !important;
+        /* Botões */
+        .button.is-link {
+            background-color: var(--rosa-escuro) !important;
+            border-radius: 15px;
+            transition: 0.3s;
+            border: none;
+            border-bottom: 4px solid #d4709d;
         }
 
-        /* Subtítulo com destaque pastel */
-        .subtitle {
-            color: #d8b4f8 !important;
+        .button.is-link:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .button.is-dark {
+            background-color: var(--texto-cor) !important;
+            border-radius: 15px;
+        }
+
+        /* Ajuste da Capa Redonda */
+        .image img {
+            border: 2px solid var(--rosa-pastel);
+            object-fit: cover;
         }
     </style>
 </head>
@@ -91,11 +112,11 @@
 <body>
 
     <div class="container">
-        <header class="level mb-6">
+        <header class="level px-4">
             <div class="level-left">
                 <div>
-                    <h1 class="title is-3">Gestão de Conteúdo</h1>
-                    <p class="subtitle is-6">Painel Administrativo</p>
+                    <h1 class="title is-3">Gestão de Conteúdo ✨</h1>
+                    <p class="subtitle is-6">Painel Administrativo MeowMusic</p>
                 </div>
             </div>
             <div class="level-right">
@@ -105,17 +126,17 @@
             </div>
         </header>
 
-        <div class="box">
+        <div class="box p-5">
             <h2 class="title is-5 mb-5">
-                <i class="fa-solid fa-circle-plus has-text-success mr-2"></i> Nova Música
+                <i class="fa-solid fa-circle-plus has-text-success mr-2"></i> Adicionar Nova Música
             </h2>
-            <form action="./musica/post" method = "post">
+            <form action="./musica/post" method="post">
                 <div class="columns is-multiline">
                     <div class="column is-4">
                         <div class="field">
                             <label class="label is-small">Título da Música</label>
                             <div class="control">
-                                <input name = "musica_input" class="input" type="text" placeholder="Ex: Starboy">
+                                <input name="musica_input" class="input" type="text" placeholder="Ex: Starboy" required>
                             </div>
                         </div>
                     </div>
@@ -123,7 +144,7 @@
                         <div class="field">
                             <label class="label is-small">Cantor / Banda</label>
                             <div class="control">
-                                <input name="cantor_input" class="input" type="text" placeholder="Ex: The Weeknd">
+                                <input name="cantor_input" class="input" type="text" placeholder="Ex: The Weeknd" required>
                             </div>
                         </div>
                     </div>
@@ -131,7 +152,7 @@
                         <div class="field">
                             <label class="label is-small">Duração</label>
                             <div class="control">
-                                <input name= "duracao_input" class="input" type="text" placeholder="Ex: 03:50">
+                                <input name="duracao_input" class="input" type="text" placeholder="Ex: 03:50">
                             </div>
                         </div>
                     </div>
@@ -145,31 +166,31 @@
                     </div>
                     <div class="column is-4">
                         <div class="field">
-                            <label name = "categoria_input" class="label is-small">Categoria</label>
+                            <label class="label is-small">Categoria</label>
                             <div class="control is-expanded">
                                 <div class="select is-fullwidth">
-                                    <select>
-                                        {%for genero in generos %}
-                                        <option value="{{nome_genero.nome}}">{{genero.nome}}Selecione...</option>
+                                    <select name="categoria_input">
+                                        <option disabled selected>Selecione...</option>
+                                        {% for genero in generos %}
+                                        <option value="{{genero.nome}}">{{genero.nome}}</option>
                                         {% endfor %}
                                         <option>Rock</option>
                                         <option>Pop</option>
                                         <option>Indie</option>
-                                        <option>R&B Alternativo</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="button is-link is-fullwidth mt-4">
+                <button type="submit" class="button is-link is-fullwidth mt-4">
                     <strong><i class="fa-solid fa-save mr-2"></i> Salvar Música</strong>
                 </button>
             </form>
         </div>
 
-        <div class="box p-0" style="overflow-x: auto; border-radius: 6px;">
-            <table class="table is-fullwidth">
+        <div class="box p-0" style="overflow: hidden;">
+            <table class="table is-fullwidth is-hoverable">
                 <thead>
                     <tr>
                         <th class="has-text-centered">ID</th>
@@ -184,47 +205,47 @@
                 <tbody>
                     {% for musica in musicas %}
                     <tr>
-                        <td class="has-text-centered has-text-link is-family-monospace">1</td>
-                        <td style="width: 80px;">
+                        <td class="has-text-centered has-text-link is-family-monospace" style="vertical-align: middle;">
+                            {{ loop.index }}
+                        </td>
+                        <td style="width: 80px; vertical-align: middle;">
                             <figure class="image is-48x48">
-                                <img src="{{musica.url_imagem}}" class="is-rounded" style="object-fit: cover;">
+                                <img src="{{musica.url_imagem}}" class="is-rounded" alt="Capa">
                             </figure>
                         </td>
-                        <td>
-                            <strong class="has-text-white">{{musica.nome}}</strong><br>
-                            <small class="has-text-grey">{{musica.cantor}}</small>
+                        <td style="vertical-align: middle;">
+                            <span class="music-name">{{musica.nome}}</span><br>
+                            <span class="singer-name">{{musica.cantor}}</span>
                         </td>
-                        <td class="is-family-monospace has-text-centered">04:12</td>
-                        <td><span class="tag is-dark">{{musica.genero}}</span></td>
-                        <td class="has-text-centered">
+                        <td class="is-family-monospace has-text-centered" style="vertical-align: middle;">
+                            {{musica.duracao}}
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <span class="tag is-dark" style="border-radius: 8px;">{{musica.genero}}</span>
+                        </td>
+                        <td class="has-text-centered" style="vertical-align: middle;">
                             {% if musica.ativo %}
                             <span class="tag is-success is-light">ATIVO</span>
                             {% else %}
-                            <span class="tag is-danger is-light">DESTIVADO</span>
+                            <span class="tag is-danger is-light">DESATIVADO</span>
                             {% endif %}
                         </td>
-                        <td class="has-text-right px-5">
+                        <td class="has-text-right px-5" style="vertical-align: middle;">
                             <div class="buttons is-right">
-                                {%  if musica.ativo %}
-                                <button class="tag is-success is-light" title="ATIVO">
-                                    {% else %}
-                                <button class="tag is-danger is-light" title="DESATIVADO">
-                                    {% endif %}
-                                    <i class="fa-solid fa-eye-slash"></i>
-                                </button>
-                                <a href="/musica/delete/{{musica.codigo}}" class="button is-small is-danger is-light" title="Excluir">
+                                <a href="/musica/status/{{musica.codigo}}" class="button is-small {{ 'is-success' if musica.ativo else 'is-danger' }} is-light">
+                                    <i class="fa-solid {{ 'fa-eye' if musica.ativo else 'fa-eye-slash' }}"></i>
+                                </a>
+                                <a href="/musica/delete/{{musica.codigo}}" class="button is-small is-danger is-light" onclick="return confirm('Tem certeza?')">
                                     <i class="fa-solid fa-trash"></i>
-                                </button>
+                                </a>
                             </div>
-                            {% endfor %}
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
-
     </div>
 
 </body>
-
 </html>

@@ -4,117 +4,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cadastro</title>
-    <style>
-      
+    <title>cadastro ✨</title>
+    @import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
 
-        /* formatação css */
+    <style>
+        :root {
+            --rosa-pastel: #ffdef2;
+            --rosa-vibrante: #f592bf;
+            --amarelo-pastel: #ffffd1;
+            --texto-cor: #6c5b7b;
+            --branco-transparente: rgba(255, 255, 255, 0.7);
+        }
+
         body {
-            background-color: #fdf6f9 !important;
-            color: #5c5c6f;
+            background-color: var(--amarelo-pastel) !important;
+            /* Fundo com bolinhas delicadas */
+            background-image: radial-gradient(var(--rosa-pastel) 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
+            
+            color: var(--texto-cor);
             min-height: 100vh;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Pangolin', cursive;
         }
 
-        .box {
-            background-color: #ffffff;
-            border: 1px solid #f3d7e3;
-            color: #6c5b7b;
-            border-radius: 16px;
-            box-shadow: 0 6px 18px rgba(243, 241, 241, 0.05);
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(12px);
-            border-radius: 18px;
-            padding: 2rem;
-            width: 350px;
-        }
-
-        .field {
-            margin-bottom: 1.5rem;
-        }
-
-        .label {
-            display: block;
-            color: #f592bf;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #fcdafa;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.75);
-            color: #000000;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        .input::placeholder {
-            color: #fcdaf9;
-        }
-
-        .input:focus {
-            border-color: #d8b4f8;
-            box-shadow: 0 0 0 2px rgba(216, 180, 248, 0.2);
-        }
-
-        .button.is-primary {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #f592bf 0%, #f592bf 100%);
-            color: #ffffff;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px #f592bf;
-        }
-
-        .button.is-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px #f592bf;
-            background: linear-gradient(135deg, #f592bf 0%, #f592bf 100%);
-        }
-
-        .button.is-primary:active {
-            transform: translateY(0);
+        /* O formulário agora é uma caixinha mágica */
+        form {
+            background: var(--branco-transparente);
+            backdrop-filter: blur(15px); /* Efeito de vidro embaçado */
+            -webkit-backdrop-filter: blur(15px);
+            
+            border: 4px solid var(--rosa-pastel);
+            border-radius: 30px;
+            padding: 2.5rem;
+            width: 320px;
+            box-shadow: 0 10px 25px rgba(245, 146, 191, 0.2);
+            text-align: center;
         }
 
         h1 {
-            color: #f592bf;
+            color: var(--rosa-vibrante);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 0px white;
+        }
+
+        /* Estilizando os labels (usuario: e senha:) */
+        form {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--texto-cor);
+        }
+
+        /* Estilizando os campos de texto */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            border: 2px solid var(--rosa-pastel);
+            border-radius: 15px;
+            background: white;
+            font-family: 'Pangolin', cursive;
+            font-size: 1rem;
+            color: var(--texto-cor);
+            outline: none;
+            box-sizing: border-box; /* Garante que o padding não quebre a largura */
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--rosa-vibrante);
+            box-shadow: 0 0 8px rgba(245, 146, 191, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* Botão fofinho de cadastrar */
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--rosa-vibrante);
+            color: white;
+            font-family: 'Pangolin', cursive;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 5px solid #d4709d; /* Efeito 3D */
+            box-shadow: 0 4px 10px rgba(245, 146, 191, 0.3);
+        }
+
+        button:hover {
+            filter: brightness(1.05);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+        /* Pequeno detalhe decorativo */
+        form::after {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            opacity: 0.6;
         }
     </style>
 </head>
 
-
-<!-- container para fazer o login -->
-
 <body>
-    <form action="/cadastro" method="post">
+    <form action="/cadastrar/post" method="post">
         <h1> ୧ ‧₊˚ welcome !🌺 ⋅ ☆ </h1>
-        usuario:
-        <input name="usuario">
-        <br>
-        senha:
-        <input name="senha">
-        <button type="submit">cadastrar!</button>
-
-
+        
+        <label>usuário: (✿◠‿◠)</label>
+        <input name="usuario" placeholder="digite seu nome...">
+        
+        <label>senha: (－ｏ－) zzZ</label>
+        <input name="senha" type="password" placeholder="sua senha secreta...">
+        
+        <a href="/admin"><button type="submit">cadastrar! ✨</button></a>
     </form>
-
 </body>
 
 </html>

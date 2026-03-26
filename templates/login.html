@@ -1,33 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>Login ✨ MeowMusic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    
     <style>
-        
+        :root {
+            --rosa-pastel: #ffdef2;
+            --rosa-vibrante: #f592bf;
+            --amarelo-pastel: #ffffd1;
+            --azul-botao: #b8e1dd;
+            --texto-cor: #6c5b7b;
+            --branco-transparente: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            background-color: var(--amarelo-pastel);
+            background-image: radial-gradient(var(--rosa-pastel) 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
+            color: var(--texto-cor);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Pangolin', cursive;
+        }
+
+        .login-container {
+            text-align: center;
+        }
+
+        form {
+            background: var(--branco-transparente);
+            backdrop-filter: blur(15px);
+            border: 4px solid var(--rosa-pastel);
+            border-radius: 30px;
+            padding: 2.5rem;
+            width: 320px;
+            box-shadow: 0 10px 25px rgba(245, 146, 191, 0.2);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid var(--rosa-pastel);
+            border-radius: 15px;
+            font-family: 'Pangolin', cursive;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Pangolin', cursive;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-login {
+            background-color: var(--rosa-vibrante);
+            color: white;
+            border-bottom: 5px solid #d4709d;
+        }
+
+        .btn-cadastro {
+            background-color: var(--azul-botao);
+            color: #5d8a84;
+            border-bottom: 5px solid #8abeb7;
+            margin-top: 15px;
+        }
+
+        button:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
     </style>
 </head>
 <body>
-    <div class="login-container"></div>
-    <h2>ೀ 🍨 ‧ ˚seja bem vindo(a)!, 
-        faça seu login! 🎀 ⊹˚. ♡</h2>
-    <form action="/login" method="POST">
-        <div class="form-group">
-            <label for="nome">usuário:</label>
-            <input type="text" id="nome" name="usuário" required>
-            </div>
 
-            <div class="form-group">
-                <label for="senha">senha:</label>
-                <input type="password" id="senha" name="senha" required>
-            </div>
+    <div class="login-container">
+        <h2>ೀ 🍨 ‧ ˚ seja bem vindo(a)!<br>faça seu login! 🎀 ⊹˚. ♡</h2>
+        
+        <form id="formMeow">
+            <label for="nome">usuário: (✿◠‿◠)</label>
+            <input type="text" id="nome" placeholder="seu nome de miau..." required>
 
-            <button type="submit">logar</button>
+            <label for="senha">senha: 🔒</label>
+            <input type="password" id="senha" placeholder="••••••••" required>
 
-    </form>
+            <button type="button" class="btn-login">logar ✨</button>
+            <a href="/cadastrar"><button type="button" class="btn-cadastro">criar conta 🐾</button></a>
+        </form>
+    </div>
+
+
     
 </body>
-
 </html>
-

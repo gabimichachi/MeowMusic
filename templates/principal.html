@@ -14,113 +14,149 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* Estilização geral do corpo da página */
+        @import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+
+        :root {
+            --rosa-pastel: #ffdef2;
+            --rosa-escuro: #f2a2c0;
+            --amarelo-pastel: #ffffd1;
+            --roxo-suave: #d8b4f8;
+            --texto-cor: #6c5b7b;
+            --branco: #ffffff;
+        }
+
+        /* geral */
         body {
             background-color: #fdf6f9;
-            color: #5c5c6f;
+            background-image: radial-gradient(var(--rosa-pastel) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--texto-cor);
             min-height: 100vh;
-            padding-top: 3.25rem;
-            font-family: 'Poppins', sans-serif;
+            padding-top: 4.5rem;
+            /* Aumentei para não cobrir o conteúdo */
+            font-family: 'Pangolin', cursive !important;
         }
 
-        /* Estilo da barra de navegação */
+        /* navbar estilizada */
         .navbar {
-            background-color: #ffeef5;
-            border-bottom: 1px solid #f3d7e3;
+            background-color: rgba(255, 238, 245, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--rosa-pastel);
+            height: 4rem;
         }
 
-        /* Cor dos itens da navbar */
-        .navbar-item,
-        .navbar-link {
-            color: #7a6c85 !important;
-            font-weight: 500;
+        .navbar-item strong {
+            font-family: 'Pangolin', cursive;
+            color: var(--rosa-escuro) !important;
+            letter-spacing: 1px;
         }
 
-        /* Estilização do campo de input */
-        .input {
-            background-color: #fff;
-            border: 1px solid #f3d7e3;
-            color: #7a6c85;
-            border-radius: 8px;
-            transition: 0.3s ease;
+        /* Barra de Pesquisa */
+        .input.is-rounded {
+            border: 2px solid var(--rosa-pastel) !important;
+            background: white;
+            font-family: 'Pangolin', cursive;
+            height: 45px;
         }
 
-        /* Cor do texto placeholder do input */
-        .input::placeholder {
-            color: #c2a8b8;
+        .input.is-rounded:focus {
+            border-color: var(--roxo-suave) !important;
+            box-shadow: 0 0 10px rgba(216, 180, 248, 0.3) !important;
         }
 
-        /* Focus no input */
-        .input:focus {
-            border-color: #d8b4f8;
-            box-shadow: 0 0 0 2px rgba(216, 180, 248, 0.2);
+        .button.is-dark.is-rounded {
+            background-color: var(--rosa-escuro) !important;
+            height: 45px;
+            padding: 0 20px;
         }
 
-        /* Ajuste nos Títulos */
+        /* Menu Lateral */
+        .menu-label {
+            color: var(--rosa-escuro) !important;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            padding-left: 5px;
+        }
+
+        .menu-list a {
+            color: var(--texto-cor) !important;
+            border-radius: 15px;
+            margin-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        .menu-list a:hover {
+            background-color: var(--rosa-pastel) !important;
+            transform: translateX(5px);
+        }
+
+        /* Cards das Músicas (O pulo do gato!) */
+        .music-card {
+            background-color: var(--branco);
+            border: 3px solid var(--rosa-pastel);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            box-shadow: 0 6px 0px var(--rosa-pastel);
+            /* Efeito 3D */
+        }
+
+        .music-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(242, 162, 192, 0.3);
+            border-color: var(--rosa-escuro);
+        }
+
         .music-title {
-            color: #6c5b7b;
-            font-weight: 600;
-            line-height: 1.2;
-            margin-bottom: 4px !important;
-            display: block;
+            color: var(--texto-cor) !important;
+            font-family: 'Pangolin', cursive;
+            font-weight: bold;
+            font-size: 1.1rem !important;
         }
 
-        /* Estilo do nome do cantor */
         .music-singer {
             color: #a393b7;
-            font-size: 0.85rem;
-            margin-bottom: 12px !important;
+            font-size: 0.9rem;
             display: block;
+            margin-bottom: 10px;
         }
 
-        /* Estilo do card da música */
-        .music-card {
-            background-color: #ffffff;
-            border: 1px solid #f3d7e3;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            height: 100%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Hover delicadinho */
-        .music-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 20px rgba(216, 180, 248, 0.25);
-            border-color: #e9c6f5;
-        }
-
-        /* Ajuste da imagem */
+        /* Imagem do Card */
         .card-image img {
-            aspect-ratio: 16/9;
-            object-fit: cover;
-            width: 100%;
+            border-bottom: 3px solid var(--rosa-pastel);
+            transition: 0.5s;
         }
 
-        /* Estilo do título da seção do menu */
-        .menu-label {
-            color: #b39bc8;
-            padding-left: 10px;
-            font-weight: 600;
+        .music-card:hover .card-image img {
+            transform: scale(1.05);
         }
 
-        /* Estilo dos links do menu */
-        .menu-list a {
-            color: #8e7ea6;
-            border-radius: 8px;
-            transition: 0.2s;
+        /* Tags */
+        .tag.is-dark {
+            background-color: var(--roxo-suave) !important;
+            border-radius: 10px;
+            font-family: 'Pangolin', cursive;
         }
 
-        /* Hover nos links */
-        .menu-list a:hover {
-            background-color: #f8e8f2;
-            color: #6c5b7b;
+        .tag.is-black {
+            background-color: var(--amarelo-pastel) !important;
+            color: var(--texto-cor) !important;
+            border-radius: 10px;
+            font-weight: bold;
         }
 
-        /* Ícone do YouTube versão pastel */
+        /* Botão Admin */
+        .button.is-link {
+            background-color: var(--amarelo-pastel) !important;
+            color: var(--texto-cor) !important;
+            border: 2px solid var(--rosa-pastel) !important;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
         .icon-youtube {
-            color: #ff8fab;
+            color: var(--rosa-escuro) !important;
         }
     </style>
 </head>
@@ -135,7 +171,7 @@
             <div class="navbar-brand">
                 <a class="navbar-item" href="/"> <!-- Link para a página inicial -->
                     <i class="fa-brands fa-youtube icon-youtube is-size-3 mr-2"></i> <!-- Ícone do YouTube -->
-                    <strong class="has-text-white is-size-4">MusicTube</strong> <!-- Nome do site -->
+                    <strong class="has-text-white is-size-4">MeowMusic</strong> <!-- Nome do site -->
                 </a>
             </div>
 

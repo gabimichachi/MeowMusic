@@ -1,81 +1,84 @@
-from flask import Flask, render_template, request, redirect
-import mysql.connector
-from model.musicas import recuperar_musicas
+from flask import Flask, render_template, request, redirect, session
+from model.musicas import recuperar_musicas, adicionar_musica, excluir_musica
 from model.generos import recuperar_generos 
-from model.musicas import adicionar_musica
-from model.musicas import excluir_musica
-from model.usuario import cadastrar_usuario
-from model.usuario import verificar_usuario
+from model.usuario import cadastrar_usuario, verificar_usuario
+from model.musicas import ativar_musica 
+
 app = Flask(__name__)
+app.secret_key = "finnteamo"
 
-
+@app.route("/home", methods=["GET"])
 @app.route("/")
-@app.route("/principal" , methods =["GET"])
 def pagina_principal():
-    # recuperando as musicas
+    # recuperando as musicas 
     musicas = recuperar_musicas(True)
-    # recuperando os generos
+    # recuperando os generos 
     generos = recuperar_generos()
-    # mostrando a pagina
-    excluir_musica(True)
+    # mostrando a pagina 
     return render_template("principal.html", musicas = musicas, generos = generos)
-
-
 
 @app.route("/admin")
 def pag_admin():
-    # recuperando as musicas
+    if "usuario_logado" not in session:
+        return redirect("/login")
+    
+    # recuperando as muicas 
     musicas = recuperar_musicas()
+    generos = recuperar_generos()
     # mostrando a pagina 
-    return render_template("administracao.html" , musicas = musicas)
+    return render_template ("administracao.html", musicas = musicas, generos = generos )
 
-@app.route("/musica/post", methods = ["POST"])
+@app.route("/musica/post", methods=["POST"])
 def api_inserir_musica():
-    cantor = request.form.get("cantor_input")
-    nome_musica = request.form.get("musica_input")
-    genero = request.form.get("nome_genero_input")
-    duracao = request.form.get("duracao_input")
-    url = request.form.get("url_imagem_input")
+    nome_musica = request.form.get("musica_nome")
+    cantor = request.form.get("cantor")
+    duracao = request.form.get("duracao")
+    url = request.form.get("imagem")
+    genero_nome = request.form.get("genero_nome")
 
-    if adicionar_musica (cantor, nome_musica, duracao, url, genero):
-        return redirect("/admin")
-    
+    if adicionar_musica( cantor, nome_musica, duracao, url, genero_nome):
+        return redirect ("/admin")
     else:
-        return ("ERRO AO ADICIONAR MÚSICA")
-    
+        return ("erro ao adicionar musica")
+
+
 @app.route("/musica/delete/<codigo>")
-def apagar_musica(codigo):
+def deletar_musica(codigo):
     excluir_musica(codigo)
     return redirect("/admin")
 
+@app.route("/musica/ativar/<codigo>/<status>")
+def ativando_musica(codigo, status):
+    ativar_musica(codigo, status)
+    return redirect("/admin")
 
-@app.route("/cadastro")
-def pagina_cadastro():
+@app.route("/cadastrar")
+def pag_cadastro():
     return render_template("cadastro.html")
 
-@app.route("/cadastro", methods = ["POST"])
-def rota_cadastro_usuario():
+@app.route("/cadastrar/post", methods=["POST"])
+def cadastro_usuario():
     login = request.form.get("usuario")
     senha = request.form.get("senha")
     cadastrar_usuario(login, senha)
-    return redirect("/cadastro")
+    return redirect("/admin")
 
 
 @app.route("/login")
-def pagina_login():
+def pag_login():
     return render_template("login.html")
 
-@app.route("login", methods = ["POST"])
-def rota_login_usuario():
+@app.route("/login/post", methods=["POST"])
+def login_post():
     login = request.form.get("usuario")
     senha = request.form.get("senha")
     usuario = verificar_usuario(login, senha)
 
     if usuario:
+        session["usuario_logado"] = usuario
         return redirect("/admin")
-    
     else:
         return redirect("/login")
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
